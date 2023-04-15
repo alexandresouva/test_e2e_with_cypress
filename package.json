@@ -4,11 +4,14 @@
   "description": "First project with cypress",
   "main": "index.js",
   "scripts": {
-    "test": "npx cypress open"
+    "cy:open": "npx cypress open",
+    "cy:run": "cypress run --browser chrome --reporter mochawesome",
+    "cy:dashboard": "npx cypress run --browser chrome --record --key 54ad2023-cd10-4eaa-a6bd-0d83b4f3b646"
   },
   "author": "Alexandre Sousa",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^12.9.0"
+    "cypress": "^12.9.0",
+    "mochawesome": "^7.1.3"
   }
 }
