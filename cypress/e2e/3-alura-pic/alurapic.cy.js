@@ -45,7 +45,7 @@ describe('Login and user register at Alura Pic ', () => {
     cy.contains('ap-vmessage', 'Must be lower case').should('be.visible');
   });
 
-  it('Checks if user name length is less than 8', () => {
+  it('Check if user name length is less than 8', () => {
     cy.contains('a', 'Register now').click();
     cy.contains('button', 'Register').click();
     cy.get('input[formcontrolname="password"]').type('alexe').blur();
@@ -71,7 +71,7 @@ describe('Login and user register at Alura Pic ', () => {
   });
 
   users.forEach((user) => {
-    it.only(`Register new user: ${user.userName} `, () => {
+    it(`Register new user: ${user.userName} `, () => {
       cy.contains('a', 'Register now').click();
       cy.contains('button', 'Register').click();
       cy.get('input[formcontrolname="email"]').type(user.email);
