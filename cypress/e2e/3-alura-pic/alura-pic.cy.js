@@ -1,4 +1,6 @@
 describe('Login and user register at Alura Pic ', () => {
+  const users = require('../../fixtures/users.json');
+
   beforeEach(() => {
     cy.visit('https://alura-fotos.herokuapp.com');
   });
@@ -50,7 +52,7 @@ describe('Login and user register at Alura Pic ', () => {
     cy.contains('ap-vmessage', 'Mininum length is 8').should('be.visible');
   });
 
-  it.only('Login with a invalid user', () => {
+  it('Login with a invalid user', () => {
     cy.login('alexandre', '1234');
 
     cy.window().then((str) => {
@@ -63,8 +65,20 @@ describe('Login and user register at Alura Pic ', () => {
     );
   });
 
-  it.only('Login with a valid user', () => {
+  it('Login with a valid user', () => {
     cy.login('flavio', '123');
     cy.contains('a', '(Logout)').should('be.visible');
+  });
+
+  users.forEach((user) => {
+    it.only(`Register new user: ${user.userName} `, () => {
+      cy.contains('a', 'Register now').click();
+      cy.contains('button', 'Register').click();
+      cy.get('input[formcontrolname="email"]').type(user.email);
+      cy.get('input[formcontrolname="fullName"]').type(user.fullName);
+      cy.get('input[formcontrolname="userName"]').type(user.userName);
+      cy.get('input[formcontrolname="password"]').type(user.password);
+      cy.contains('button', 'Register').click();
+    });
   });
 });
