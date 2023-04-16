@@ -3,7 +3,7 @@ describe('Login and user register at Alura Pic ', () => {
     cy.visit('https://alura-fotos.herokuapp.com');
   });
 
-  it('Check validation message', () => {
+  it('Check if is has validation message', () => {
     cy.contains('a', 'Register now').click();
     cy.contains('button', 'Register').click();
     cy.contains('ap-vmessage', 'Email is required!').should('be.visible');
@@ -48,5 +48,23 @@ describe('Login and user register at Alura Pic ', () => {
     cy.contains('button', 'Register').click();
     cy.get('input[formcontrolname="password"]').type('alexe').blur();
     cy.contains('ap-vmessage', 'Mininum length is 8').should('be.visible');
+  });
+
+  it.only('Login with a invalid user', () => {
+    cy.login('alexandre', '1234');
+
+    cy.window().then((str) => {
+      cy.stub(str, 'alert').as('alert');
+    });
+
+    cy.get('@alert').should(
+      'have.been.calledOnceWith',
+      'Invalid user name or password'
+    );
+  });
+
+  it.only('Login with a valid user', () => {
+    cy.login('flavio', '123');
+    cy.contains('a', '(Logout)').should('be.visible');
   });
 });
